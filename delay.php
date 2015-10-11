@@ -1,23 +1,5 @@
 <? 
-/* transform user input into variables //expected values */
-$userGroupID =	filter_var($_GET["userGoupID"],	FILTER_SANITIZE_NUMBER_FLOAT);	//1-999
-$startpage = 	filter_var($_GET["startpage"],	FILTER_SANITIZE_NUMBER_FLOAT);	//1-n
-$pages = 		filter_var($_GET["pages"],	FILTER_SANITIZE_NUMBER_FLOAT);		//1-n
-$dlanguageuCozso = filter_var($_GET["dlanguageuCozso"],	FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-/* Let's use site name and user group as file name and name of a table where we are storing data */
-$site_z =  htmlspecialchars($_GET["site"]); //russianstepbystep.com
-$site_a = preg_replace("/(https:\/\/|http:\/\/|www)/", '', $site_z);
-$site = $site_a;
-//$site = explode('/', $site_a, 2)[0]; //this value will be used to access the admin panel; Requires PHP 5.4
-
-$table_z = preg_replace("/[^A-Za-z0-9 ]/", '', $site);
-$table = $table_z.$userGroupID;
-
-/* values check*/
-if ($pages < 1) {$pages = 1;}
-if ($userGroupID < 1) {$userGroupID = 1;}
-if ($startpage < 1) {$startpage = 1;}
+include 'vars.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,8 +20,21 @@ if ($startpage < 1) {$startpage = 1;}
   <div class="row">
     <div class="col-lg-12">
       <h1>Process of parcing</h1>
+        <a href="view.php?site=<?php echo $site; ?>&userGoupID=<?php echo $userGroupID; ?>&startpage=<?php echo $startpage; ?>&pages=<?php echo $pages; ?>&uCozsoName=<?php echo $uCozsoName; ?>&uCozsoValue=<?php echo $uCozsoValue; ?>">view</a>
+
+        <div id="vars">
+        <ul>
+            <li>Site: <?php echo $site; ?></li>
+            <li>UsergroupID = <?php echo $userGroupID; ?></li>
+            <li>Working on pages from <?php echo $startpage; ?> to <?php echo $pages; ?></li>
+            <li>Table name: <?php echo $table; ?></li>
+            <li>Session cookie: <?php echo $uCozsoName; ?>=<?php echo $uCozsoValue; ?></li>
+            
+        </ul>
+            <hr />
+        </div>
       <div id="responce"></div>
-	  <div id="download"></div>   
+	  <div id="download"></div>
     </div>
   </div>
 </div>
@@ -84,6 +79,17 @@ function generateFile() {
 }
 	
 });
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-2455268-27', 'auto');
+  ga('send', 'pageview');
+
 </script>
 </body>
 </html>
