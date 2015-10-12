@@ -18,4 +18,14 @@ $table = $table_z.$userGroupID;
 if ($pages < 1) {$pages = 1;}
 if ($userGroupID < 1) {$userGroupID = 1;}
 if ($startpage < 1) {$startpage = 1;}
+
+$opts = array(
+  'http'=>array(
+    'method'=>"GET",
+    'header'=>"Accept-language: en\r\n" .
+              "Cookie: ".$uCozsoName."=".$uCozsoValue
+  )
+);
+$context = stream_context_create($opts);
+
 ?>

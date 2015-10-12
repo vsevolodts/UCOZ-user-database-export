@@ -1,5 +1,27 @@
 <? 
 include 'vars.php';
+include 'db.php';
+include $_SERVER['DOCUMENT_ROOT'].'/simplehtmldom/simple_html_dom.php';
+
+// Checks
+$html = file_get_html("http://".$site."/panel/?a=users;l=find;p=1;g=1", false, $context);
+$error = '';
+$back = "http://".$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), '/\\')."?error=";
+
+foreach($html->find('.myWinError ') as $myWinError) {
+		if ( strlen($myWinError) > 10) {
+			$error = 'Check your site security settings';
+            header($back.$error);
+		};
+	};
+
+//Check if script can access admin panel at all
+foreach($html->find('#lform ') as $lform) {
+        if ( strlen($lform) > 10 && $error == '') {
+            $error = 'Check cookie and make sure the admin panel is openes in another tab';
+            header($back.$error);
+        };
+    };
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,8 +42,7 @@ include 'vars.php';
   <div class="row">
     <div class="col-lg-12">
       <h1>Process of parcing</h1>
-        <a href="view.php?site=<?php echo $site; ?>&userGoupID=<?php echo $userGroupID; ?>&startpage=<?php echo $startpage; ?>&pages=<?php echo $pages; ?>&uCozsoName=<?php echo $uCozsoName; ?>&uCozsoValue=<?php echo $uCozsoValue; ?>">view</a>
-
+        <!--<a href="view.php?site=<?php echo $site; ?>&userGoupID=<?php echo $userGroupID; ?>&startpage=<?php echo $startpage; ?>&pages=<?php echo $pages; ?>&uCozsoName=<?php echo $uCozsoName; ?>&uCozsoValue=<?php echo $uCozsoValue; ?>">view</a>-->
         <div id="vars">
         <ul>
             <li>Site: <?php echo $site; ?></li>
@@ -57,7 +78,7 @@ function sendDelayedAjax(i, uri) {
 }
 
 	for (i = <? echo $startpage; ?>; i <= <? echo $pages; ?>; i++) {
-		var uri = "parser.php?site=<? echo $site; ?>&userGoupID=<? echo $userGroupID; ?>&startpage="+i+"&pages="+i+"&dlanguageuCozso=<? echo $dlanguageuCozso; ?>";
+		var uri = "parser.php?site=<? echo $site; ?>&userGoupID=<? echo $userGroupID; ?>&startpage="+i+"&pages="+i+"&uCozsoName=<?php echo $uCozsoName; ?>&uCozsoValue=<?php echo $uCozsoValue; ?>";
 		sendDelayedAjax(i, uri);
 		
 		if (i == <? echo $pages; ?>) {
