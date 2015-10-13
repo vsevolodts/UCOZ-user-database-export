@@ -5,26 +5,25 @@ $sdom = $_SERVER['DOCUMENT_ROOT'].'/simplehtmldom/simple_html_dom.php';
 
 // Checks
 $error = '';
-$back = "http://".$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), '/\\')."?error=";
+$back = "Location: http://".$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), '/\\')."?error=";
 
-//CHeck if SimpleHtmlDom is loaded
-if( file_exists($path) && is_readable($path) && include($path)) {} else {
-  $error = 'SimpleHTMLDOM library is missing. Download library from http://simplehtmldom.sourceforge.net/ to /simplehtmldom/ folder.';
-  header($back.$error);
+//Check if SimpleHtmlDom is loaded
+if( file_exists($sdom) && is_readable($sdom) && include($sdom)) {
+} else {
+	$error = ' SimpleHTMLDOM library is missing. Download library from <a href="http://simplehtmldom.sourceforge.net">simplehtmldom.sourceforge.net</a> to <code>/simplehtmldom</code> folder.';
+	header($back.$error);
 };
-
 $html = file_get_html("http://".$site."/panel/?a=users;l=find;p=1;g=1", false, $context);
 foreach($html->find('.myWinError ') as $myWinError) {
 		if ( strlen($myWinError) > 10) {
-			$error = 'Check your site security settings';
+			$error = ' Check your site security settings.';
             header($back.$error);
 		};
 	};
-
 //Check if script can access admin panel at all
 foreach($html->find('#lform ') as $lform) {
         if ( strlen($lform) > 10 && $error == '') {
-            $error = 'Check cookie and make sure the admin panel is openes in another tab';
+            $error = ' Check cookie and make sure the admin panel is open in another tab.';
             header($back.$error);
         };
     };
