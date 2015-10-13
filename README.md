@@ -1,5 +1,6 @@
 # UCOZ-user-database-export
-Export members by group to CSV file or your MySQL database
+Export members by group to CSV file or your MySQL database.
+Project home page: http://uex.ucoz.com/
 
 ## Required libraries
 http://simplehtmldom.sourceforge.net/
