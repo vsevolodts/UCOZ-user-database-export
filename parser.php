@@ -16,13 +16,13 @@ for ($p = $startpage; $p <= $pages; $p++) {
 	$html = file_get_html($url, false, $context);
 	foreach($html->find('table.myTbl') as $myTbl) {
 		foreach($myTbl->find('tr') as $tr) {
-			$login = $tr->find('td', 1)->plaintext;
+			$login = rtrim($tr->find('td', 1)->plaintext, ' \* ');
             $ip = $tr->find('td', 2)->plaintext;
 			$name = $tr->find('td', 4)->plaintext;
 			$email = $tr->find('td', 5)->plaintext;
 			
 			if ($email != 'E-mail') {
-				$sql = "INSERT IGNORE INTO $table (login, ip, name, email) VALUES ( '$login', '$ip', '$name', '$email' )";
+				$sql = "INSERT INTO $table (login, ip, name, email) VALUES ( '$login', '$ip', '$name', '$email' )";
 				$result = mysql_query($sql);		
 				if ($result) {$users++;}
 				$records++;

@@ -1,13 +1,19 @@
 <? 
 include 'vars.php';
 include 'db.php';
-include $_SERVER['DOCUMENT_ROOT'].'/simplehtmldom/simple_html_dom.php';
+$sdom = $_SERVER['DOCUMENT_ROOT'].'/simplehtmldom/simple_html_dom.php';
 
 // Checks
-$html = file_get_html("http://".$site."/panel/?a=users;l=find;p=1;g=1", false, $context);
 $error = '';
 $back = "http://".$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), '/\\')."?error=";
 
+//CHeck if SimpleHtmlDom is loaded
+if( file_exists($path) && is_readable($path) && include($path)) {} else {
+  $error = 'SimpleHTMLDOM library is missing. Download library from http://simplehtmldom.sourceforge.net/ to /simplehtmldom/ folder.';
+  header($back.$error);
+};
+
+$html = file_get_html("http://".$site."/panel/?a=users;l=find;p=1;g=1", false, $context);
 foreach($html->find('.myWinError ') as $myWinError) {
 		if ( strlen($myWinError) > 10) {
 			$error = 'Check your site security settings';
