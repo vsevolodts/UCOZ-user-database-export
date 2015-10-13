@@ -1,5 +1,5 @@
 # UCOZ-user-database-export
-Export members by group to CSV file or your MySQL database.
+Export members from UCOZ websites by group to CSV file (online tool) and/or your MySQL database.
 Project home page: http://uex.ucoz.com/
 
 ## Required libraries
