@@ -1,6 +1,6 @@
 <?
 include $_SERVER['DOCUMENT_ROOT'].'/simplehtmldom/simple_html_dom.php';
-include $_SERVER['DOCUMENT_ROOT'].'/rsbs/db.php';
+include 'db.php';
 
 $table_z =	htmlspecialchars($_GET["table"]);
 $table =	preg_replace("/[^A-Za-z0-9 ]/", '', $table_z);
