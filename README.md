@@ -9,7 +9,7 @@ http://simplehtmldom.sourceforge.net/
 ## Required stack:
 - PHP 5.3
 - MySQL 5.1
-- Files are using bootstrap files and jQuery linked from CDN
+- Files are using Bootstrap  and jQuery linked from CDN
 
 ## Installation
 - load files from this repo to your web server (to any folder)
